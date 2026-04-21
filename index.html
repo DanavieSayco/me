@@ -1,0 +1,921 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+    />
+    <title>Ma. Danavie Sayco · 2D Artist</title>
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=PT+Mono&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Bootstrap 4 Grid + Utilities (lightweight, no extra JS) -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background: #ffffff;
+        font-family: "Montserrat", sans-serif;
+        color: #1e1e1e;
+        overflow-x: hidden;
+      }
+
+      /* ===== NAVIGATION (clean) ===== */
+      .site-nav {
+        background: #fff;
+        padding: 18px 0;
+        border-bottom: 1px solid #eee;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        backdrop-filter: blur(0px);
+      }
+      .site-navigation {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .logo {
+        font-size: 1.5rem;
+        font-weight: 800;
+        text-decoration: none;
+        color: #000;
+        letter-spacing: -0.5px;
+      }
+      .logo span {
+        color: #0389ff;
+      }
+      .site-nav .site-menu {
+        display: flex;
+        gap: 2rem;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+      .site-nav .site-menu li a {
+        text-decoration: none;
+        font-weight: 600;
+        color: #2c2c2c;
+        transition: color 0.2s ease;
+        font-size: 0.95rem;
+      }
+      .site-nav .site-menu li a:hover {
+        color: #0389ff;
+      }
+      .burger {
+        display: none;
+        cursor: pointer;
+        font-size: 1.8rem;
+      }
+      @media (max-width: 768px) {
+        .site-nav .site-menu {
+          display: none;
+        }
+        .burger {
+          display: block;
+        }
+        .mobile-menu-active .site-menu {
+          display: flex;
+          flex-direction: column;
+          position: absolute;
+          top: 70px;
+          left: 0;
+          width: 100%;
+          background: white;
+          padding: 24px;
+          z-index: 1000;
+          box-shadow: 0 12px 24px rgba(0, 0, 0, 0.05);
+          gap: 1rem;
+        }
+      }
+
+      /* ===== SECTIONS ===== */
+      .untree_co-section {
+        padding: 60px 0;
+      }
+      .pb-0 {
+        padding-bottom: 0 !important;
+      }
+      .heading {
+        font-size: 3rem;
+        font-weight: 800;
+        letter-spacing: -1px;
+      }
+      .subheading {
+        font-size: 1.2rem;
+        color: #555;
+        font-weight: 400;
+      }
+      .btn-outline-black {
+        border: 2px solid #000;
+        background: transparent;
+        color: #000;
+        padding: 12px 28px;
+        border-radius: 40px;
+        font-weight: 600;
+        transition: all 0.2s;
+        display: inline-block;
+        text-decoration: none;
+      }
+      .btn-outline-black:hover {
+        background: #000;
+        color: #fff;
+      }
+      .social-links {
+        display: flex;
+        justify-content: center;
+        gap: 24px;
+        margin-top: 32px;
+      }
+      .social-links a {
+        color: #2c2c2c;
+        font-size: 1.5rem;
+        transition: color 0.2s;
+      }
+      .social-links a:hover {
+        color: #0389ff;
+      }
+      .section-heading {
+        font-size: 2.2rem;
+        font-weight: 800;
+      }
+
+      /* category tabs (pinterest-like minimal) */
+      .category-tabs {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.7rem;
+        margin-bottom: 2rem;
+      }
+      .btn-category {
+        background: #f0f2f5;
+        border: none;
+        padding: 0.55rem 1.4rem;
+        border-radius: 60px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #1f2937;
+        transition: all 0.2s;
+        cursor: pointer;
+      }
+      .btn-category.active {
+        background: #000;
+        color: #fff;
+      }
+      .btn-category:hover:not(.active) {
+        background: #e2e6ea;
+        transform: translateY(-1px);
+      }
+
+      /* ===== PINTEREST-STYLE MASONRY GRID: no extra vertical gaps ===== */
+      /* We use CSS columns (masonry) for perfect gap-free layout, consistent column width */
+      .portfolio-masonry {
+        column-count: 3;
+        column-gap: 24px;
+        margin-top: 0.5rem;
+      }
+      /* each item breaks nicely inside columns, avoids gaps */
+      .masonry-item {
+        break-inside: avoid;
+        margin-bottom: 24px;
+        display: inline-block;
+        width: 100%;
+      }
+      /* portfolio card styling */
+      .portfolio-card {
+        cursor: pointer;
+        border-radius: 20px;
+        overflow: hidden;
+        background: #fafafc;
+        transition:
+          transform 0.22s ease,
+          box-shadow 0.28s ease;
+        box-shadow:
+          0 6px 14px rgba(0, 0, 0, 0.04),
+          0 2px 4px rgba(0, 0, 0, 0.02);
+        display: block;
+        position: relative;
+      }
+      .portfolio-card:hover {
+        transform: translateY(-4px);
+        box-shadow:
+          0 20px 30px rgba(0, 0, 0, 0.1),
+          0 4px 8px rgba(0, 0, 0, 0.04);
+      }
+      /* images fill width, height auto -> natural aspect ratio, no cropping */
+      .portfolio-card img {
+        width: 100%;
+        height: auto;
+        display: block;
+        background: #f4f4f6;
+      }
+      /* overlay on hover (same sleek effect) */
+      .card-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.65);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.25s;
+        pointer-events: none;
+        border-radius: 20px;
+      }
+      .portfolio-card:hover .card-overlay {
+        opacity: 1;
+      }
+      .zoom-icon {
+        font-size: 2rem;
+        color: white;
+        background: rgba(255, 255, 255, 0.2);
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        backdrop-filter: blur(4px);
+      }
+      .card-caption {
+        position: absolute;
+        bottom: 18px;
+        left: 18px;
+        color: white;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        z-index: 2;
+        right: 18px;
+      }
+      .card-caption h3 {
+        font-size: 0.95rem;
+        font-weight: 700;
+        margin: 0;
+        letter-spacing: -0.2px;
+      }
+      .card-caption p {
+        font-size: 0.7rem;
+        margin: 4px 0 0;
+        opacity: 0.9;
+        font-weight: 500;
+      }
+
+      /* responsive columns: 3 -> 2 -> 1 */
+      @media (max-width: 992px) {
+        .portfolio-masonry {
+          column-count: 2;
+          column-gap: 20px;
+        }
+        .masonry-item {
+          margin-bottom: 20px;
+        }
+      }
+      @media (max-width: 576px) {
+        .portfolio-masonry {
+          column-count: 1;
+          column-gap: 0;
+        }
+        .masonry-item {
+          margin-bottom: 20px;
+        }
+      }
+
+      /* other sections (unchanged but refined) */
+      .about-section-wrapper {
+        background: #fefefe;
+        padding: 40px 0 50px;
+      }
+      .author-wrap img {
+        width: 160px;
+        height: 160px;
+        object-fit: cover;
+        border-radius: 50%;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+        border: 4px solid white;
+      }
+      .about-text p {
+        font-size: 1rem;
+        line-height: 1.7;
+        color: #2d3e50;
+      }
+      .service-card {
+        background: #fff;
+        border-radius: 24px;
+        padding: 1.8rem;
+        text-align: center;
+        box-shadow: 0 5px 18px rgba(0, 0, 0, 0.02);
+        border: 1px solid #edf2f7;
+        transition: transform 0.2s;
+        height: 100%;
+      }
+      .service-card:hover {
+        transform: translateY(-6px);
+      }
+      .service-icon {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        color: #0389ff;
+      }
+      .condensed-contact {
+        background: #f8fafc;
+        padding: 40px 20px;
+        border-radius: 32px;
+        margin: 40px 0;
+      }
+      .site-footer {
+        background: #f1f5f9;
+        padding: 30px 0;
+        text-align: center;
+        font-size: 0.85rem;
+        margin-top: 30px;
+      }
+      /* lightbox */
+      .lightbox-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.94);
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        visibility: hidden;
+        opacity: 0;
+        transition:
+          visibility 0.2s,
+          opacity 0.2s;
+        cursor: pointer;
+      }
+      .lightbox-overlay.active {
+        visibility: visible;
+        opacity: 1;
+      }
+      .lightbox-content {
+        max-width: 90vw;
+        max-height: 90vh;
+        position: relative;
+      }
+      .lightbox-content img {
+        max-width: 100%;
+        max-height: 85vh;
+        object-fit: contain;
+        border-radius: 16px;
+        box-shadow: 0 25px 40px rgba(0, 0, 0, 0.4);
+      }
+      .close-lightbox {
+        position: absolute;
+        top: -44px;
+        right: 0;
+        background: white;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        font-weight: bold;
+        cursor: pointer;
+        color: #000;
+      }
+      .grid-loading {
+        text-align: center;
+        padding: 3rem;
+        column-span: all;
+      }
+      .no-images {
+        text-align: center;
+        padding: 3rem;
+        color: #6c757d;
+        column-span: all;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="site-nav">
+      <div class="container">
+        <div class="site-navigation">
+          <a href="#" class="logo">MDS<span>.</span></a>
+          <ul class="site-menu">
+            <li><a href="#home-section">Home</a></li>
+            <li><a href="#portfolio-section">Portfolio</a></li>
+            <li><a href="#about-section">About</a></li>
+            <li><a href="#services-section">Services</a></li>
+            <li><a href="#contact-section">Contact</a></li>
+          </ul>
+          <div class="burger js-menu-toggle"><i class="fas fa-bars"></i></div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="untree_co-section pb-0" id="home-section">
+      <div class="container">
+        <div class="row justify-content-center text-center">
+          <div class="col-md-8">
+            <h1 class="heading mb-3">Ma. Danavie Sayco</h1>
+            <h2 class="subheading mb-4">2D Artist</h2>
+            <p>
+              <a
+                href="mailto:madanavie.sayco@gmail.com"
+                class="btn-outline-black"
+                >madanavie.sayco@gmail.com</a
+              >
+            </p>
+            <div class="social-links">
+              <a
+                href="https://www.instagram.com/bluebeary.fudge/"
+                aria-label="Instagram"
+                ><i class="fab fa-instagram"></i
+              ></a>
+              <a
+                href="https://www.linkedin.com/in/ma-danavie-sayco-1049111b7/"
+                aria-label="LinkedIn"
+                ><i class="fab fa-linkedin-in"></i
+              ></a>
+              <a
+                href="https://docs.google.com/document/d/1qFRvYYTSFOCe7uoBbLtQZr8Jmz15rljz/edit?usp=sharing&ouid=101901917891482624645&rtpof=true&sd=true"
+                aria-label="Resume"
+                ><i class="fa fa-newspaper"></i
+              ></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PORTFOLIO SECTION: MASONRY (Pinterest style) - zero extra vertical gaps, consistent width per column -->
+    <div class="untree_co-section" id="portfolio-section">
+      <div class="container">
+        <div class="row mb-4">
+          <div class="col-lg-7 text-center mx-auto">
+            <h2 class="section-heading mb-2"><strong>Portfolio</strong></h2>
+            <p class="text-muted">Game assets & 2D artworks</p>
+          </div>
+        </div>
+        <div class="category-tabs" id="categoryTabs"></div>
+        <div id="portfolio-masonry-container">
+          <div id="masonry-grid" class="portfolio-masonry"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- About Section -->
+    <div class="about-section-wrapper" id="about-section">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-md-5 text-center mb-4 mb-md-0">
+            <div class="author-wrap">
+              <img
+                src="/images/profile.png"
+                alt="Danavie Sayco"
+                style="
+                  width: 180px;
+                  height: 180px;
+                  object-fit: cover;
+                  border-radius: 50%;
+                "
+              />
+            </div>
+          </div>
+          <div class="col-md-7 about-text">
+            <h3 class="mb-3">About the Artist</h3>
+            <p>
+              Hi, I'm Danavie, a passionate 2D artist capable in creating
+              vibrant game assets, character designs, and backgrounds. I bring
+              ideas to life with a focus on storytelling and visual clarity.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Services -->
+    <div class="untree_co-section" id="services-section">
+      <div class="container">
+        <div class="row text-center mb-5">
+          <div class="col">
+            <h2 class="section-heading">What I Offer</h2>
+            <p class="text-muted">Tailored 2D art services for games & media</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4 mb-4">
+            <div class="service-card">
+              <div class="service-icon"><i class="fas fa-person"></i></div>
+              <h3>Character Design</h3>
+              <p>
+                Concept art, turnarounds, expressive poses and full character
+                sheets ready for animation.
+              </p>
+            </div>
+          </div>
+          <div class="col-md-4 mb-4">
+            <div class="service-card">
+              <div class="service-icon"><i class="fas fa-tree"></i></div>
+              <h3>Environment & Props</h3>
+              <p>
+                Backgrounds, tilesets, props and immersive worlds that fit your
+                game style.
+              </p>
+            </div>
+          </div>
+          <div class="col-md-4 mb-4">
+            <div class="service-card">
+              <div class="service-icon"><i class="fas fa-magic"></i></div>
+              <h3>Effects & UI</h3>
+              <p>
+                VFX, particle assets, icons, UI elements and splash
+                illustrations.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact -->
+    <div class="container" id="contact-section">
+      <div class="condensed-contact text-center">
+        <h3 class="mb-3">Let's work together</h3>
+        <p class="mb-4">
+          Got a project in mind? Reach out for commissions or collaborations.
+        </p>
+        <a
+          href="mailto:madanavie.sayco@gmail.com"
+          class="btn-outline-black"
+          style="background: #000; color: #fff; border-color: #000"
+          >madanavie.sayco@gmail.com</a
+        >
+
+        <div class="social-links">
+          <a
+            href="https://www.instagram.com/bluebeary.fudge/"
+            aria-label="Instagram"
+            ><i class="fab fa-instagram"></i
+          ></a>
+          <a
+            href="https://www.linkedin.com/in/ma-danavie-sayco-1049111b7/"
+            aria-label="LinkedIn"
+            ><i class="fab fa-linkedin-in"></i
+          ></a>
+          <a
+            href="https://docs.google.com/document/d/1qFRvYYTSFOCe7uoBbLtQZr8Jmz15rljz/edit?usp=sharing&ouid=101901917891482624645&rtpof=true&sd=true"
+            aria-label="Resume"
+            ><i class="fa fa-newspaper"></i
+          ></a>
+        </div>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+      <div class="container text-center">
+        <p>
+          &copy; 2026 Ma. Danavie Sayco — 2D Artist Portfolio. All rights
+          reserved.
+        </p>
+      </div>
+    </footer>
+
+    <!-- Lightbox -->
+    <div id="lightboxOverlay" class="lightbox-overlay">
+      <div class="lightbox-content">
+        <span class="close-lightbox">&times;</span
+        ><img id="lightboxImg" src="" alt="Preview" />
+      </div>
+    </div>
+
+    <script>
+      (function () {
+        // ---------- CATEGORIES (rich & detailed) ----------
+        const categories = [
+          { id: "all", label: "Show All", folder: null },
+          { id: "background", label: "Background", folder: "background" },
+          { id: "character", label: "Character", folder: "character" },
+          { id: "effects", label: "Effects", folder: "effects" },
+          { id: "icon", label: "Icon", folder: "icon" },
+          { id: "illustration", label: "Illustration", folder: "illustration" },
+          { id: "interface", label: "Interface", folder: "interface" },
+          { id: "item", label: "Item", folder: "item" },
+          { id: "misc", label: "Misc", folder: "misc" },
+          { id: "pixel", label: "Pixel Art", folder: "pixel" },
+          { id: "splash", label: "Splash Art", folder: "splash" },
+          { id: "voxel", label: "Voxel", folder: "voxel" },
+        ];
+
+        let currentCategory = "all";
+        let imageData = { all: [] };
+
+        // ----- IMAGE SET: different aspect ratios to show perfect masonry (no gaps, consistent width) -----
+        function getDemoImagesByCategory(categoryId) {
+          const demoMap = {
+            background: [
+              "https://picsum.photos/id/104/600/400", // 1.5:1
+              "https://picsum.photos/id/15/600/350", // wide
+              "https://picsum.photos/id/96/600/420",
+              "https://picsum.photos/id/66/600/380",
+              "https://picsum.photos/id/28/600/600", // square
+            ],
+            character: [
+              "https://picsum.photos/id/169/500/700", // portrait 0.71 ratio
+              "https://picsum.photos/id/64/550/680",
+              "https://picsum.photos/id/127/600/500",
+              "https://picsum.photos/id/158/520/750",
+              "https://picsum.photos/id/20/600/800",
+            ],
+            effects: [
+              "https://picsum.photos/id/29/600/400",
+              "https://picsum.photos/id/175/700/450",
+              "https://picsum.photos/id/193/500/500",
+              "https://picsum.photos/id/13/580/720",
+            ],
+            icon: [
+              "https://picsum.photos/id/26/400/400",
+              "https://picsum.photos/id/28/450/450",
+              "https://picsum.photos/id/39/380/380",
+            ],
+            illustration: [
+              "https://picsum.photos/id/20/800/600",
+              "https://picsum.photos/id/42/750/500",
+              "https://picsum.photos/id/76/650/900",
+              "https://picsum.photos/id/88/600/750",
+            ],
+            interface: [
+              "https://picsum.photos/id/24/600/400",
+              "https://picsum.photos/id/36/550/550",
+              "https://picsum.photos/id/99/500/600",
+            ],
+            item: [
+              "https://picsum.photos/id/39/500/500",
+              "https://picsum.photos/id/100/450/450",
+            ],
+            misc: [
+              "https://picsum.photos/id/13/600/800",
+              "https://picsum.photos/id/88/550/650",
+              "https://picsum.photos/id/41/600/500",
+            ],
+            pixel: [
+              "https://picsum.photos/id/177/512/512",
+              "https://picsum.photos/id/99/480/480",
+              "https://picsum.photos/id/114/500/500",
+            ],
+            splash: [
+              "https://picsum.photos/id/119/1200/800",
+              "https://picsum.photos/id/94/1000/700",
+              "https://picsum.photos/id/106/900/1100",
+            ],
+            voxel: [
+              "https://picsum.photos/id/89/600/600",
+              "https://picsum.photos/id/111/640/480",
+              "https://picsum.photos/id/47/500/650",
+            ],
+          };
+          return (
+            demoMap[categoryId] || [
+              "https://picsum.photos/id/1/600/450",
+              "https://picsum.photos/id/155/500/700",
+            ]
+          );
+        }
+
+        async function loadManifest() {
+          try {
+            const response = await fetch("manifest.json?t=" + Date.now());
+            if (response.ok) {
+              const data = await response.json();
+              console.log("✅ Manifest loaded");
+              return data;
+            }
+          } catch (e) {}
+          return null;
+        }
+
+        async function initImageData() {
+          const manifest = await loadManifest();
+          for (let cat of categories)
+            if (cat.id !== "all") imageData[cat.id] = [];
+
+          if (manifest) {
+            for (let cat of categories) {
+              if (
+                cat.folder &&
+                manifest[cat.folder] &&
+                Array.isArray(manifest[cat.folder])
+              ) {
+                imageData[cat.id] = manifest[cat.folder].filter(
+                  (p) => p && p.trim() !== "",
+                );
+              }
+            }
+            let allImages = [];
+            for (let cat of categories)
+              if (cat.id !== "all" && imageData[cat.id]?.length)
+                allImages.push(...imageData[cat.id]);
+            imageData.all = allImages;
+          }
+
+          let hasContent = false;
+          for (let cat of categories)
+            if (cat.id !== "all" && imageData[cat.id]?.length) {
+              hasContent = true;
+              break;
+            }
+
+          if (!hasContent || !manifest) {
+            for (let cat of categories) {
+              if (cat.id !== "all") {
+                imageData[cat.id] = getDemoImagesByCategory(cat.id);
+              }
+            }
+            let allDemos = [];
+            for (let cat of categories)
+              if (cat.id !== "all" && imageData[cat.id])
+                allDemos.push(...imageData[cat.id]);
+            imageData.all = allDemos;
+          }
+
+          if (!imageData.all || imageData.all.length === 0) {
+            imageData.all = [
+              "https://picsum.photos/id/100/600/450",
+              "https://picsum.photos/id/101/800/600",
+            ];
+          }
+          await renderMasonryPortfolio();
+        }
+
+        function escapeHtml(str) {
+          if (!str) return "";
+          return str.replace(/[&<>]/g, function (m) {
+            if (m === "&") return "&amp;";
+            if (m === "<") return "&lt;";
+            if (m === ">") return "&gt;";
+            return m;
+          });
+        }
+
+        async function renderMasonryPortfolio() {
+          const masonryContainer = document.querySelector("#masonry-grid");
+          if (!masonryContainer) return;
+
+          masonryContainer.innerHTML = `<div class="grid-loading"><div class="spinner-border text-dark" role="status"></div><p>Loading artwork...</p></div>`;
+          await new Promise((r) => setTimeout(r, 40));
+
+          const images = imageData[currentCategory] || [];
+          if (images.length === 0) {
+            masonryContainer.innerHTML = `<div class="no-images">✨ No images in this category yet. Stay tuned!</div>`;
+            return;
+          }
+
+          let itemsHtml = "";
+          images.forEach((imgUrl, idx) => {
+            let filename = imgUrl.split("/").pop();
+            let rawTitle = filename
+              .split(".")[0]
+              .replace(/[_-]/g, " ")
+              .replace(/\d+$/, "")
+              .trim();
+            let title = (rawTitle || "Artwork").substring(0, 38);
+            if (title.length > 36) title = title.substring(0, 34) + "…";
+            let categoryLabel =
+              currentCategory === "all"
+                ? "Portfolio"
+                : categories.find((c) => c.id === currentCategory)?.label ||
+                  "Artwork";
+
+            itemsHtml += `
+          <div class="masonry-item">
+            <div class="portfolio-card" data-img="${escapeHtml(imgUrl)}" data-title="${escapeHtml(title)}">
+              <div class="card-overlay">
+                <span class="zoom-icon"><i class="fas fa-expand-alt"></i></span>
+                <div class="card-caption">
+                  <h3>${escapeHtml(title)}</h3>
+                  <p>${escapeHtml(categoryLabel)}</p>
+                </div>
+              </div>
+              <img src="${imgUrl}" alt="${escapeHtml(title)}" loading="lazy" onerror="this.src='https://placehold.co/600x450/2c3e50/white?text=Artwork'">
+            </div>
+          </div>
+        `;
+          });
+          masonryContainer.innerHTML = itemsHtml;
+
+          // attach lightbox to each card
+          document.querySelectorAll(".portfolio-card").forEach((card) => {
+            card.addEventListener("click", (e) => {
+              const imgUrl = card.getAttribute("data-img");
+              const title = card.getAttribute("data-title");
+              if (imgUrl) {
+                const overlay = document.getElementById("lightboxOverlay");
+                const lightboxImg = document.getElementById("lightboxImg");
+                lightboxImg.src = imgUrl;
+                lightboxImg.alt = title || "Artwork";
+                overlay.classList.add("active");
+              }
+            });
+          });
+        }
+
+        function buildTabs() {
+          const tabsContainer = document.getElementById("categoryTabs");
+          if (!tabsContainer) return;
+          let btnsHtml = "";
+          categories.forEach((cat) => {
+            btnsHtml += `<button class="btn-category ${cat.id === "all" ? "active" : ""}" data-category="${cat.id}">${cat.label}</button>`;
+          });
+          tabsContainer.innerHTML = btnsHtml;
+          document.querySelectorAll(".btn-category").forEach((btn) => {
+            btn.addEventListener("click", async () => {
+              const catId = btn.getAttribute("data-category");
+              if (catId === currentCategory) return;
+              document
+                .querySelectorAll(".btn-category")
+                .forEach((b) => b.classList.remove("active"));
+              btn.classList.add("active");
+              currentCategory = catId;
+              await renderMasonryPortfolio();
+            });
+          });
+        }
+
+        function initLightbox() {
+          const overlay = document.getElementById("lightboxOverlay");
+          const closeBtn = document.querySelector(".close-lightbox");
+          overlay.addEventListener("click", (e) => {
+            if (e.target === overlay || e.target === closeBtn) {
+              overlay.classList.remove("active");
+              document.getElementById("lightboxImg").src = "";
+            }
+          });
+          document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape" && overlay.classList.contains("active")) {
+              overlay.classList.remove("active");
+              document.getElementById("lightboxImg").src = "";
+            }
+          });
+        }
+
+        function initMobileMenu() {
+          const burger = document.querySelector(".js-menu-toggle");
+          if (burger) {
+            burger.addEventListener("click", () => {
+              document.body.classList.toggle("mobile-menu-active");
+              const menu = document.querySelector(".site-menu");
+              if (menu)
+                menu.style.display =
+                  menu.style.display === "flex" ? "none" : "flex";
+            });
+          }
+        }
+
+        // smooth anchor scroll
+        document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+          anchor.addEventListener("click", function (e) {
+            const targetId = this.getAttribute("href");
+            if (targetId === "#") return;
+            const targetElem = document.querySelector(targetId);
+            if (targetElem) {
+              e.preventDefault();
+              targetElem.scrollIntoView({ behavior: "smooth", block: "start" });
+              if (window.innerWidth <= 768) {
+                document.body.classList.remove("mobile-menu-active");
+                const mobileMenu = document.querySelector(".site-menu");
+                if (mobileMenu) mobileMenu.style.display = "";
+              }
+            }
+          });
+        });
+
+        window.addEventListener("DOMContentLoaded", () => {
+          buildTabs();
+          initLightbox();
+          initMobileMenu();
+          initImageData();
+        });
+      })();
+    </script>
+  </body>
+</html>

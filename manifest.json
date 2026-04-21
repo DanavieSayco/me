@@ -1,0 +1,90 @@
+{
+  "background": [
+    "showcase/background/bg.png",
+    "showcase/background/depths_ritual.png",
+    "showcase/background/labs_laboratory.png",
+    "showcase/background/the wilds_undergrowth.png",
+    "showcase/background/wilds_swamp.png"
+  ],
+  "character": [
+    "showcase/character/404_concept wip_4.png",
+    "showcase/character/behemoth_phase_1.png",
+    "showcase/character/behemoth_phase_2.png",
+    "showcase/character/behemoth_phase_3.png",
+    "showcase/character/pharaoh_reference.png",
+    "showcase/character/philosopher_reference.png",
+    "showcase/character/soldier_reference.png",
+    "showcase/character/viking_reference.png",
+    "showcase/character/walk_cycle.gif",
+    "showcase/character/mc_original.gif",
+    "showcase/character/mc_victory.gif",
+    "showcase/character/mc_damage.png",
+    "showcase/character/character_sheet.png",
+    "showcase/character/spr_enemy_acid_tank_plant.png",
+    "showcase/character/spr_enemy_bomber.png",
+    "showcase/character/spr_enemy_luminous.png"
+  ],
+  "effects": [
+    "showcase/effects/damage_high_blue.gif",
+    "showcase/effects/damage_insane_blue.gif",
+    "showcase/effects/damage_low_blue.gif",
+    "showcase/effects/damage_medium_blue.gif",
+    "showcase/effects/dash_normal_1.png",
+    "showcase/effects/dash_perk_1.png",
+    "showcase/effects/lava.png"
+  ],
+  "icon": [
+    "showcase/icon/bronze_skin.png",
+    "showcase/icon/concussed.png",
+    "showcase/icon/lost.png",
+    "showcase/icon/majesty.png",
+    "showcase/icon/witches_curse.png"
+  ],
+  "illustration": [
+    "showcase/illustration/card_art_enflame.png",
+    "showcase/illustration/card_art_generic_good_effect.png",
+    "showcase/illustration/card_art_gratitude.png",
+    "showcase/illustration/card_art_leadership.png",
+    "showcase/illustration/card_art_valor.png",
+    "showcase/illustration/bday_high.png",
+    "showcase/illustration/insta_lady.jpg",
+    "showcase/illustration/insta_unicorn_pot.jpg",
+    "showcase/illustration/insta_gaze.jpg",
+    "showcase/illustration/insta_watermelon.jpg",
+    "showcase/illustration/insta_noir.jpg",
+    "showcase/illustration/insta_flying_paper_cranes.jpg"
+  ],
+  "interface": [
+    "showcase/interface/battle_ui_bl_hidden.png",
+    "showcase/interface/hp_test_2.png",
+    "showcase/interface/interface.png"
+  ],
+  "item": [
+    "showcase/item/depths_ritual_decor_large_2.png",
+    "showcase/item/depths_ritual_decor_large_4.png",
+    "showcase/item/depths_ritual_decor_small_3.png",
+    "showcase/item/labs_laboratory_decor_small_3.png",
+    "showcase/item/labs_laboratory_decor_small_4.png",
+    "showcase/item/wilds_undergrowth_decor_large_2.png",
+    "showcase/item/wilds_undergrowth_decor_small_1.png",
+    "showcase/item/wilds_undergrowth_wall_1.png"
+  ],
+  "misc": ["showcase/misc/lune_logo.png", "showcase/misc/bake_logo.png"],
+  "pixel": [
+    "showcase/pixel/11_strength.png",
+    "showcase/pixel/12_the_hanged_man.png",
+    "showcase/pixel/16_the_tower.png",
+    "showcase/pixel/20_judgement.png",
+    "showcase/pixel/ace_of_pentacles.png"
+  ],
+  "splash": ["showcase/splash/library_capsule.png"],
+  "voxel": [
+    "showcase/voxel/buildings-2_18.png",
+    "showcase/voxel/food_court.png",
+    "showcase/voxel/rooftop.png",
+    "showcase/voxel/shops-2_9.png",
+    "showcase/voxel/spa.png",
+    "showcase/voxel/store_ceiling.png",
+    "showcase/voxel/waffle_night.png"
+  ]
+}
