@@ -159,13 +159,33 @@
         font-weight: 800;
       }
 
-      /* category tabs (pinterest-like minimal) */
+      /* ===== STICKY CATEGORY TABS (fully opaque, no blank space) ===== */
+      .sticky-tabs-wrapper {
+        position: sticky;
+        top: 73px; /* just below the nav bar */
+        z-index: 99;
+        background: #ffffff; /* fully opaque - solid white */
+        padding: 12px 0;
+        border-bottom: 1px solid #eef2f8;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+        margin: 0;
+        width: 100%;
+        left: 0;
+        right: 0;
+      }
+      /* Ensure the container inside the sticky wrapper has no overflow/gap issues */
+      .sticky-tabs-wrapper .container {
+        padding-left: 15px;
+        padding-right: 15px;
+        max-width: 100%;
+      }
       .category-tabs {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
         gap: 0.7rem;
-        margin-bottom: 2rem;
+        margin: 0;
+        padding: 0;
       }
       .btn-category {
         background: #f0f2f5;
@@ -177,6 +197,7 @@
         color: #1f2937;
         transition: all 0.2s;
         cursor: pointer;
+        white-space: nowrap;
       }
       .btn-category.active {
         background: #000;
@@ -185,6 +206,23 @@
       .btn-category:hover:not(.active) {
         background: #e2e6ea;
         transform: translateY(-1px);
+      }
+      /* Scroll padding for anchor target */
+      #portfolio-section {
+        scroll-margin-top: 140px;
+      }
+      @media (max-width: 768px) {
+        .sticky-tabs-wrapper {
+          top: 70px;
+          padding: 10px 0;
+        }
+        .btn-category {
+          padding: 0.45rem 1.1rem;
+          font-size: 0.75rem;
+        }
+        #portfolio-section {
+          scroll-margin-top: 130px;
+        }
       }
 
       /* ===== PINTEREST-STYLE MASONRY GRID ===== */
@@ -277,7 +315,7 @@
         font-weight: 500;
       }
 
-      /* ===== CATEGORY SECTION STYLES (Each category as its own little section) ===== */
+      /* Category section styles (each category as its own little section) */
       .category-section {
         margin-bottom: 2.5rem;
         break-inside: avoid;
@@ -323,7 +361,6 @@
         column-count: 3;
         column-gap: 24px;
       }
-      /* Responsive for category masonry */
       @media (max-width: 992px) {
         .portfolio-masonry,
         .category-masonry {
@@ -348,7 +385,7 @@
         }
       }
 
-      /* other sections */
+      /* Other sections */
       .about-section-wrapper {
         background: #fefefe;
         padding: 40px 0 50px;
@@ -513,7 +550,7 @@
       </div>
     </div>
 
-    <!-- PORTFOLIO SECTION -->
+    <!-- PORTFOLIO SECTION with Sticky Tabs (opaque, no blank gaps) -->
     <div class="untree_co-section" id="portfolio-section">
       <div class="container">
         <div class="row mb-4">
@@ -522,7 +559,14 @@
             <p class="text-muted">Game assets & 2D artworks</p>
           </div>
         </div>
-        <div class="category-tabs" id="categoryTabs"></div>
+      </div>
+      <!-- Sticky category tabs wrapper - fully opaque and full-width with no blank space -->
+      <div class="sticky-tabs-wrapper" id="stickyTabsWrapper">
+        <div class="container">
+          <div class="category-tabs" id="categoryTabs"></div>
+        </div>
+      </div>
+      <div class="container" style="margin-top: 28px">
         <div id="portfolio-masonry-container">
           <div id="masonry-grid" class="portfolio-masonry"></div>
         </div>
@@ -658,12 +702,12 @@
       (function () {
         // ---------- CATEGORIES (each becomes its own little section in Show All) ----------
         const categories = [
-          { id: "all", label: "Show All", folder: null },
+          { id: "all", label: "Show All", folder: null, icon: "fa-th-large" },
           {
             id: "background",
             label: "Background",
             folder: "background",
-            icon: "fa-image",
+            icon: "fa-landscape",
           },
           {
             id: "character",
@@ -704,8 +748,9 @@
 
         let currentCategory = "all";
         let imageData = { all: [] };
+        let isRendering = false;
 
-        // demo images with good variety (maintain aspect ratios)
+        // demo images with good variety
         function getDemoImagesByCategory(categoryId) {
           const demoMap = {
             background: [
@@ -801,7 +846,6 @@
                 );
               }
             }
-            // build all array as categorized objects
             let allGrouped = [];
             for (let cat of categories) {
               if (cat.id !== "all" && imageData[cat.id]?.length) {
@@ -847,7 +891,7 @@
             ];
             imageData.misc = ["https://picsum.photos/id/100/600/450"];
           }
-          await renderMasonryPortfolio();
+          await renderMasonryPortfolio(true);
         }
 
         function escapeHtml(str) {
@@ -860,7 +904,6 @@
           });
         }
 
-        // build card HTML (reusable)
         function buildCardHtml(imgUrl, title, categoryLabel) {
           return `
             <div class="masonry-item">
@@ -880,7 +923,8 @@
 
         function attachCardEvents() {
           document.querySelectorAll(".portfolio-card").forEach((card) => {
-            card.addEventListener("click", (e) => {
+            card.removeEventListener("click", card._listener);
+            const handler = (e) => {
               const imgUrl = card.getAttribute("data-img");
               const title = card.getAttribute("data-title");
               if (imgUrl) {
@@ -890,23 +934,39 @@
                 lightboxImg.alt = title || "Artwork";
                 overlay.classList.add("active");
               }
-            });
+            };
+            card.addEventListener("click", handler);
+            card._listener = handler;
           });
         }
 
-        // RENDER: for "Show All" each category is its own little section with independent masonry column layout
-        async function renderMasonryPortfolio() {
+        function scrollToPortfolio() {
+          const portfolioSection = document.getElementById("portfolio-section");
+          if (portfolioSection) {
+            portfolioSection.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+          }
+        }
+
+        async function renderMasonryPortfolio(skipScroll = false) {
+          if (isRendering) return;
+          isRendering = true;
           const masonryContainer = document.querySelector("#masonry-grid");
-          if (!masonryContainer) return;
+          if (!masonryContainer) {
+            isRendering = false;
+            return;
+          }
 
           masonryContainer.innerHTML = `<div class="grid-loading"><div class="spinner-border text-dark" role="status"></div><p>Loading artwork...</p></div>`;
-          await new Promise((r) => setTimeout(r, 40));
+          await new Promise((r) => setTimeout(r, 30));
 
-          // Case: individual category (non-all)
           if (currentCategory !== "all") {
             const images = imageData[currentCategory] || [];
             if (images.length === 0) {
               masonryContainer.innerHTML = `<div class="no-images">✨ No images in this category yet. Stay tuned!</div>`;
+              isRendering = false;
               return;
             }
             let itemsHtml = "";
@@ -927,18 +987,20 @@
             });
             masonryContainer.innerHTML = itemsHtml;
             attachCardEvents();
+            isRendering = false;
+            if (!skipScroll) scrollToPortfolio();
             return;
           }
 
-          // "SHOW ALL": each category gets its own distinct section with header + its own masonry grid
+          // Show All: grouped by category sections
           const groupedItems = imageData.all || [];
           if (groupedItems.length === 0) {
             masonryContainer.innerHTML = `<div class="no-images">✨ No artworks found.</div>`;
+            isRendering = false;
             return;
           }
 
-          // Group by categoryId
-          const groupMap = new Map(); // key: categoryId, value: array of image urls
+          const groupMap = new Map();
           for (let item of groupedItems) {
             const catId = item.categoryId || "misc";
             if (!groupMap.has(catId)) groupMap.set(catId, []);
@@ -946,23 +1008,20 @@
           }
 
           let finalHtml = "";
-          // iterate through categories in defined order (skip 'all')
           for (let cat of categories) {
             if (cat.id === "all") continue;
             const catImages = groupMap.get(cat.id);
             if (catImages && catImages.length > 0) {
               const iconClass = cat.icon || "fa-folder-open";
               const count = catImages.length;
-              // Category header (little section title)
               finalHtml += `
                 <div class="category-section">
                   <div class="category-header">
                     <h3><i class="fas ${iconClass}"></i> ${cat.label}</h3>
                     <span class="category-badge">${count} item${count !== 1 ? "s" : ""}</span>
                   </div>
-                  <div class="category-masonry" data-category-masonry="${cat.id}">
+                  <div class="category-masonry">
               `;
-              // generate masonry items inside this category container
               for (let imgUrl of catImages) {
                 let filename = imgUrl.split("/").pop();
                 let rawTitle = filename
@@ -977,7 +1036,7 @@
                 if (title.length > 36) title = title.substring(0, 34) + "…";
                 finalHtml += buildCardHtml(imgUrl, title, cat.label);
               }
-              finalHtml += `</div></div>`; // close category-masonry and category-section
+              finalHtml += `</div></div>`;
             }
           }
 
@@ -986,8 +1045,9 @@
           } else {
             masonryContainer.innerHTML = finalHtml;
             attachCardEvents();
-            // ensure each .category-masonry uses CSS columns (already defined)
           }
+          isRendering = false;
+          if (!skipScroll) scrollToPortfolio();
         }
 
         function buildTabs() {
@@ -1007,7 +1067,7 @@
                 .forEach((b) => b.classList.remove("active"));
               btn.classList.add("active");
               currentCategory = catId;
-              await renderMasonryPortfolio();
+              await renderMasonryPortfolio(false);
             });
           });
         }
@@ -1015,17 +1075,16 @@
         function initLightbox() {
           const overlay = document.getElementById("lightboxOverlay");
           const closeBtn = document.querySelector(".close-lightbox");
+          const closeLightbox = () => {
+            overlay.classList.remove("active");
+            document.getElementById("lightboxImg").src = "";
+          };
           overlay.addEventListener("click", (e) => {
-            if (e.target === overlay || e.target === closeBtn) {
-              overlay.classList.remove("active");
-              document.getElementById("lightboxImg").src = "";
-            }
+            if (e.target === overlay || e.target === closeBtn) closeLightbox();
           });
           document.addEventListener("keydown", (e) => {
-            if (e.key === "Escape" && overlay.classList.contains("active")) {
-              overlay.classList.remove("active");
-              document.getElementById("lightboxImg").src = "";
-            }
+            if (e.key === "Escape" && overlay.classList.contains("active"))
+              closeLightbox();
           });
         }
 
@@ -1042,7 +1101,6 @@
           }
         }
 
-        // smooth scroll
         document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
           anchor.addEventListener("click", function (e) {
             const targetId = this.getAttribute("href");
