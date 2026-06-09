@@ -28,9 +28,14 @@
     "showcase/illustration/personal_birthday.png",
     "showcase/illustration/personal_noir.png",
     "showcase/illustration/personal_underwater.png",
-    "showcase/illustration/unyielding_card_art.png"
+    "showcase/illustration/unyielding_card_art.png",
+    "showcase/illustration/star_escape_library_capsule.png"
   ],
-  "misc": ["showcase/misc/lune_logo.png", "showcase/misc/test.png"],
+  "misc": [
+    "showcase/misc/lune_logo.png",
+    "showcase/misc/mns_logo.png",
+    "showcase/misc/wedding_invitation.png"
+  ],
   "pixel": [
     "showcase/pixel/fanart_tighnari.png",
     "showcase/pixel/tarot.png",
