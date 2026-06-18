@@ -7,14 +7,12 @@
       content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
     />
     <title>Ma. Danavie Sayco · 2D Artist</title>
-
     <!-- Google Fonts -->
     <link
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=PT+Mono&display=swap"
       rel="stylesheet"
     />
-
-    <!-- Bootstrap 4 Grid + Utilities (lightweight, no extra JS) -->
+    <!-- Bootstrap 4 Grid + Utilities -->
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
@@ -23,22 +21,18 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
     />
-
     <style>
       * {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
       }
-
       body {
         background: #ffffff;
         font-family: "Montserrat", sans-serif;
         color: #1e1e1e;
         overflow-x: hidden;
       }
-
-      /* ===== NAVIGATION (clean) ===== */
       .site-nav {
         background: #fff;
         padding: 18px 0;
@@ -47,7 +41,6 @@
         position: sticky;
         top: 0;
         z-index: 100;
-        backdrop-filter: blur(0px);
       }
       .site-navigation {
         display: flex;
@@ -75,7 +68,7 @@
         text-decoration: none;
         font-weight: 600;
         color: #2c2c2c;
-        transition: color 0.2s ease;
+        transition: color 0.2s;
         font-size: 0.95rem;
       }
       .site-nav .site-menu li a:hover {
@@ -107,8 +100,6 @@
           gap: 1rem;
         }
       }
-
-      /* ===== SECTIONS ===== */
       .untree_co-section {
         padding: 60px 0;
       }
@@ -158,22 +149,16 @@
         font-size: 2.2rem;
         font-weight: 800;
       }
-
-      /* ===== STICKY CATEGORY TABS (fully opaque, no blank space) ===== */
       .sticky-tabs-wrapper {
         position: sticky;
-        top: 73px; /* just below the nav bar */
+        top: 73px;
         z-index: 99;
-        background: #ffffff; /* fully opaque - solid white */
+        background: #ffffff;
         padding: 12px 0;
         border-bottom: 1px solid #eef2f8;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
-        margin: 0;
         width: 100%;
-        left: 0;
-        right: 0;
       }
-      /* Ensure the container inside the sticky wrapper has no overflow/gap issues */
       .sticky-tabs-wrapper .container {
         padding-left: 15px;
         padding-right: 15px;
@@ -207,7 +192,6 @@
         background: #e2e6ea;
         transform: translateY(-1px);
       }
-      /* Scroll padding for anchor target */
       #portfolio-section {
         scroll-margin-top: 140px;
       }
@@ -224,8 +208,6 @@
           scroll-margin-top: 130px;
         }
       }
-
-      /* ===== PINTEREST-STYLE MASONRY GRID ===== */
       .portfolio-masonry {
         column-count: 2;
         column-gap: 24px;
@@ -314,8 +296,6 @@
         opacity: 0.9;
         font-weight: 500;
       }
-
-      /* Category section styles (each category as its own little section) */
       .category-section {
         margin-bottom: 2.5rem;
         break-inside: avoid;
@@ -384,8 +364,6 @@
           font-size: 1.35rem;
         }
       }
-
-      /* Other sections */
       .about-section-wrapper {
         background: #fefefe;
         padding: 40px 0 50px;
@@ -495,6 +473,43 @@
         color: #6c757d;
         column-span: all;
       }
+      /* Toast notification for copied link */
+      .toast-notification {
+        position: fixed;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #1e1e1e;
+        color: white;
+        padding: 12px 24px;
+        border-radius: 8px;
+        font-size: 0.9rem;
+        z-index: 99999;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        pointer-events: none;
+        font-weight: 500;
+      }
+      .toast-notification.show {
+        opacity: 1;
+      }
+      .share-link-btn {
+        background: transparent;
+        border: none;
+        color: #0389ff;
+        font-size: 0.85rem;
+        cursor: pointer;
+        padding: 4px 12px;
+        border-radius: 20px;
+        transition: background 0.2s;
+        margin-left: 8px;
+      }
+      .share-link-btn:hover {
+        background: #eef2f8;
+      }
+      .category-header {
+        position: relative;
+      }
     </style>
   </head>
   <body>
@@ -514,7 +529,7 @@
       </div>
     </nav>
 
-    <!-- Hero Section -->
+    <!-- Hero -->
     <div class="untree_co-section pb-0" id="home-section">
       <div class="container">
         <div class="row justify-content-center text-center">
@@ -553,7 +568,7 @@
       </div>
     </div>
 
-    <!-- PORTFOLIO SECTION with Sticky Tabs (opaque, no blank gaps) -->
+    <!-- PORTFOLIO -->
     <div class="untree_co-section" id="portfolio-section">
       <div class="container">
         <div class="row mb-4">
@@ -563,7 +578,6 @@
           </div>
         </div>
       </div>
-      <!-- Sticky category tabs wrapper - fully opaque and full-width with no blank space -->
       <div class="sticky-tabs-wrapper" id="stickyTabsWrapper">
         <div class="container">
           <div class="category-tabs" id="categoryTabs"></div>
@@ -576,7 +590,7 @@
       </div>
     </div>
 
-    <!-- About Section -->
+    <!-- About -->
     <div class="about-section-wrapper" id="about-section">
       <div class="container">
         <div class="row align-items-center">
@@ -663,7 +677,6 @@
           style="background: #000; color: #fff; border-color: #000"
           >madanavie.sayco@gmail.com</a
         >
-
         <div class="social-links">
           <a
             href="https://www.instagram.com/bluebeary.fudge/"
@@ -704,9 +717,14 @@
       </div>
     </div>
 
+    <!-- Toast notification -->
+    <div id="toastNotification" class="toast-notification">
+      Link copied to clipboard!
+    </div>
+
     <script>
       (function () {
-        // ---------- CATEGORIES (each becomes its own little section in Show All) ----------
+        // -------- CATEGORIES --------
         const categories = [
           { id: "all", label: "Show All", folder: null, icon: "fa-th-large" },
           {
@@ -734,12 +752,7 @@
             folder: "illustration",
             icon: "fa-palette",
           },
-          {
-            id: "misc",
-            label: "Misc",
-            folder: "misc",
-            icon: "fa-desktop",
-          },
+          { id: "misc", label: "Misc", folder: "misc", icon: "fa-desktop" },
           { id: "pixel", label: "Pixel Art", folder: "pixel", icon: "fa-cube" },
         ];
 
@@ -747,7 +760,7 @@
         let imageData = { all: [] };
         let isRendering = false;
 
-        // demo images with good variety
+        // -------- DEMO IMAGES (fallback) --------
         function getDemoImagesByCategory(categoryId) {
           const demoMap = {
             background: [
@@ -786,46 +799,25 @@
               "https://picsum.photos/id/36/550/550",
               "https://picsum.photos/id/99/500/600",
             ],
-            item: [
-              "https://picsum.photos/id/39/500/500",
-              "https://picsum.photos/id/100/450/450",
-            ],
-            misc: [
-              "https://picsum.photos/id/13/600/800",
-              "https://picsum.photos/id/88/550/650",
-              "https://picsum.photos/id/41/600/500",
-            ],
             pixel: [
               "https://picsum.photos/id/177/512/512",
               "https://picsum.photos/id/99/480/480",
               "https://picsum.photos/id/114/500/500",
             ],
-            splash: [
-              "https://picsum.photos/id/119/1200/800",
-              "https://picsum.photos/id/94/1000/700",
-              "https://picsum.photos/id/106/900/1100",
-            ],
-            voxel: [
-              "https://picsum.photos/id/89/600/600",
-              "https://picsum.photos/id/111/640/480",
-              "https://picsum.photos/id/47/500/650",
-            ],
           };
           return demoMap[categoryId] || ["https://picsum.photos/id/1/600/450"];
         }
 
+        // -------- LOAD MANIFEST (if exists) --------
         async function loadManifest() {
           try {
-            const response = await fetch("manifest.json?t=" + Date.now());
-            if (response.ok) {
-              const data = await response.json();
-              console.log("✅ Manifest loaded");
-              return data;
-            }
+            const resp = await fetch("manifest.json?t=" + Date.now());
+            if (resp.ok) return await resp.json();
           } catch (e) {}
           return null;
         }
 
+        // -------- INIT IMAGE DATA --------
         async function initImageData() {
           const manifest = await loadManifest();
           for (let cat of categories)
@@ -846,34 +838,30 @@
             let allGrouped = [];
             for (let cat of categories) {
               if (cat.id !== "all" && imageData[cat.id]?.length) {
-                for (let url of imageData[cat.id]) {
-                  allGrouped.push({ categoryId: cat.id, url: url });
-                }
+                for (let url of imageData[cat.id])
+                  allGrouped.push({ categoryId: cat.id, url });
               }
             }
             imageData.all = allGrouped;
           }
 
           let hasContent = false;
-          for (let cat of categories) {
+          for (let cat of categories)
             if (cat.id !== "all" && imageData[cat.id]?.length) {
               hasContent = true;
               break;
             }
-          }
 
           if (!hasContent || !manifest) {
             for (let cat of categories) {
-              if (cat.id !== "all") {
+              if (cat.id !== "all")
                 imageData[cat.id] = getDemoImagesByCategory(cat.id);
-              }
             }
             let allGrouped = [];
             for (let cat of categories) {
               if (cat.id !== "all" && imageData[cat.id]?.length) {
-                for (let url of imageData[cat.id]) {
-                  allGrouped.push({ categoryId: cat.id, url: url });
-                }
+                for (let url of imageData[cat.id])
+                  allGrouped.push({ categoryId: cat.id, url });
               }
             }
             imageData.all = allGrouped;
@@ -891,6 +879,7 @@
           await renderMasonryPortfolio(true);
         }
 
+        // -------- UTILITY --------
         function escapeHtml(str) {
           if (!str) return "";
           return str.replace(/[&<>]/g, function (m) {
@@ -902,20 +891,7 @@
         }
 
         function buildCardHtml(imgUrl, title, categoryLabel) {
-          return `
-            <div class="masonry-item">
-              <div class="portfolio-card" data-img="${escapeHtml(imgUrl)}" data-title="${escapeHtml(title)}">
-                <div class="card-overlay">
-                  <span class="zoom-icon"><i class="fas fa-expand-alt"></i></span>
-                  <div class="card-caption">
-                    <h3>${escapeHtml(title)}</h3>
-                    <p>${escapeHtml(categoryLabel)}</p>
-                  </div>
-                </div>
-                <img src="${imgUrl}" alt="${escapeHtml(title)}" loading="lazy" onerror="this.src='https://placehold.co/600x450/2c3e50/white?text=Artwork'">
-              </div>
-            </div>
-          `;
+          return `<div class="masonry-item"><div class="portfolio-card" data-img="${escapeHtml(imgUrl)}" data-title="${escapeHtml(title)}"><div class="card-overlay"><span class="zoom-icon"><i class="fas fa-expand-alt"></i></span><div class="card-caption"><h3>${escapeHtml(title)}</h3><p>${escapeHtml(categoryLabel)}</p></div></div><img src="${imgUrl}" alt="${escapeHtml(title)}" loading="lazy" onerror="this.src='https://placehold.co/600x450/2c3e50/white?text=Artwork'"></div></div>`;
         }
 
         function attachCardEvents() {
@@ -925,11 +901,11 @@
               const imgUrl = card.getAttribute("data-img");
               const title = card.getAttribute("data-title");
               if (imgUrl) {
-                const overlay = document.getElementById("lightboxOverlay");
-                const lightboxImg = document.getElementById("lightboxImg");
-                lightboxImg.src = imgUrl;
-                lightboxImg.alt = title || "Artwork";
-                overlay.classList.add("active");
+                document.getElementById("lightboxImg").src = imgUrl;
+                document.getElementById("lightboxImg").alt = title || "Artwork";
+                document
+                  .getElementById("lightboxOverlay")
+                  .classList.add("active");
               }
             };
             card.addEventListener("click", handler);
@@ -938,15 +914,62 @@
         }
 
         function scrollToPortfolio() {
-          const portfolioSection = document.getElementById("portfolio-section");
-          if (portfolioSection) {
-            portfolioSection.scrollIntoView({
-              behavior: "smooth",
-              block: "start",
-            });
+          document
+            .getElementById("portfolio-section")
+            .scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+
+        // -------- SHARE/LINK FUNCTIONALITY --------
+        function getCategoryLink(categoryId) {
+          const baseUrl = window.location.href.split("#")[0].split("?")[0];
+          if (categoryId === "all") return baseUrl;
+          return baseUrl + "#category=" + categoryId;
+        }
+
+        function copyCategoryLink(categoryId) {
+          const link = getCategoryLink(categoryId);
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard
+              .writeText(link)
+              .then(() => {
+                showToast("Link copied to clipboard!");
+              })
+              .catch(() => {
+                fallbackCopy(link);
+              });
+          } else {
+            fallbackCopy(link);
           }
         }
 
+        function fallbackCopy(text) {
+          const textarea = document.createElement("textarea");
+          textarea.value = text;
+          textarea.style.position = "fixed";
+          textarea.style.opacity = "0";
+          document.body.appendChild(textarea);
+          textarea.select();
+          try {
+            document.execCommand("copy");
+            showToast("Link copied to clipboard!");
+          } catch (err) {
+            showToast("Press Ctrl+C to copy: " + text);
+          }
+          document.body.removeChild(textarea);
+        }
+
+        function showToast(message) {
+          const toast = document.getElementById("toastNotification");
+          toast.textContent = message;
+          toast.classList.add("show");
+          clearTimeout(toast._timeout);
+          toast._timeout = setTimeout(
+            () => toast.classList.remove("show"),
+            2500,
+          );
+        }
+
+        // -------- RENDER --------
         async function renderMasonryPortfolio(skipScroll = false) {
           if (isRendering) return;
           isRendering = true;
@@ -967,20 +990,18 @@
               return;
             }
             let itemsHtml = "";
-            const categoryObj = categories.find(
-              (c) => c.id === currentCategory,
-            );
-            const categoryLabel = categoryObj?.label || "Artwork";
+            const catObj = categories.find((c) => c.id === currentCategory);
+            const label = catObj?.label || "Artwork";
             images.forEach((imgUrl) => {
-              let filename = imgUrl.split("/").pop();
-              let rawTitle = filename
+              let fname = imgUrl.split("/").pop();
+              let raw = fname
                 .split(".")[0]
                 .replace(/[_-]/g, " ")
                 .replace(/\d+$/, "")
                 .trim();
-              let title = (rawTitle || categoryLabel).substring(0, 38);
+              let title = (raw || label).substring(0, 38);
               if (title.length > 36) title = title.substring(0, 34) + "…";
-              itemsHtml += buildCardHtml(imgUrl, title, categoryLabel);
+              itemsHtml += buildCardHtml(imgUrl, title, label);
             });
             masonryContainer.innerHTML = itemsHtml;
             attachCardEvents();
@@ -989,102 +1010,118 @@
             return;
           }
 
-          // Show All: grouped by category sections
+          // Show All: grouped by category
           const groupedItems = imageData.all || [];
           if (groupedItems.length === 0) {
             masonryContainer.innerHTML = `<div class="no-images">✨ No artworks found.</div>`;
             isRendering = false;
             return;
           }
-
           const groupMap = new Map();
           for (let item of groupedItems) {
             const catId = item.categoryId || "misc";
             if (!groupMap.has(catId)) groupMap.set(catId, []);
             groupMap.get(catId).push(item.url);
           }
-
           let finalHtml = "";
           for (let cat of categories) {
             if (cat.id === "all") continue;
             const catImages = groupMap.get(cat.id);
             if (catImages && catImages.length > 0) {
-              const iconClass = cat.icon || "fa-folder-open";
+              const icon = cat.icon || "fa-folder-open";
               const count = catImages.length;
-              finalHtml += `
-                <div class="category-section">
-                  <div class="category-header">
-                    <h3><i class="fas ${iconClass}"></i> ${cat.label}</h3>
-                    <span class="category-badge">${count} item${count !== 1 ? "s" : ""}</span>
-                  </div>
-                  <div class="category-masonry">
-              `;
+              finalHtml += `<div class="category-section"><div class="category-header"><h3><i class="fas ${icon}"></i> ${cat.label}</h3><span class="category-badge">${count} item${count !== 1 ? "s" : ""}</span><button class="share-link-btn" onclick="window.copyCategoryLink('${cat.id}')" title="Copy link to this category"><i class="fas fa-link"></i> Share</button></div><div class="category-masonry">`;
               for (let imgUrl of catImages) {
-                let filename = imgUrl.split("/").pop();
-                let rawTitle = filename
+                let fname = imgUrl.split("/").pop();
+                let raw = fname
                   .split(".")[0]
                   .replace(/[_-]/g, " ")
                   .replace(/\d+$/, "")
                   .trim();
-                let title = (rawTitle || cat.label + " artwork").substring(
-                  0,
-                  38,
-                );
+                let title = (raw || cat.label + " artwork").substring(0, 38);
                 if (title.length > 36) title = title.substring(0, 34) + "…";
                 finalHtml += buildCardHtml(imgUrl, title, cat.label);
               }
               finalHtml += `</div></div>`;
             }
           }
-
-          if (finalHtml === "") {
+          if (finalHtml === "")
             masonryContainer.innerHTML = `<div class="no-images">✨ No categorized images found.</div>`;
-          } else {
-            masonryContainer.innerHTML = finalHtml;
-            attachCardEvents();
-          }
+          else masonryContainer.innerHTML = finalHtml;
+          attachCardEvents();
           isRendering = false;
           if (!skipScroll) scrollToPortfolio();
         }
 
+        // -------- BUILD TABS + URL SYNC (using hash) --------
         function buildTabs() {
-          const tabsContainer = document.getElementById("categoryTabs");
-          if (!tabsContainer) return;
-          let btnsHtml = "";
-          categories.forEach((cat) => {
-            btnsHtml += `<button class="btn-category ${cat.id === "all" ? "active" : ""}" data-category="${cat.id}">${cat.label}</button>`;
+          const container = document.getElementById("categoryTabs");
+          if (!container) return;
+          let html = "";
+          categories.forEach((c) => {
+            html += `<button class="btn-category ${c.id === "all" ? "active" : ""}" data-category="${c.id}">${c.label}</button>`;
           });
-          tabsContainer.innerHTML = btnsHtml;
+          container.innerHTML = html;
+
           document.querySelectorAll(".btn-category").forEach((btn) => {
-            btn.addEventListener("click", async () => {
-              const catId = btn.getAttribute("data-category");
+            btn.addEventListener("click", async function () {
+              const catId = this.getAttribute("data-category");
               if (catId === currentCategory) return;
+              // Update URL hash
+              if (catId === "all") {
+                window.location.hash = "";
+              } else {
+                window.location.hash = "category=" + catId;
+              }
+              // Update active tab
               document
                 .querySelectorAll(".btn-category")
                 .forEach((b) => b.classList.remove("active"));
-              btn.classList.add("active");
+              this.classList.add("active");
               currentCategory = catId;
               await renderMasonryPortfolio(false);
             });
           });
         }
 
+        // -------- ROUTE: on load / hashchange --------
+        function routeFromHash() {
+          let catId = "all";
+          const hash = window.location.hash;
+          if (hash && hash.startsWith("#category=")) {
+            const parsed = hash.replace("#category=", "");
+            const valid = categories.some((c) => c.id === parsed);
+            if (valid) catId = parsed;
+          }
+          currentCategory = catId;
+          // Update active tab
+          document.querySelectorAll(".btn-category").forEach((b) => {
+            b.classList.toggle(
+              "active",
+              b.getAttribute("data-category") === catId,
+            );
+          });
+          renderMasonryPortfolio(true);
+        }
+
+        // -------- LIGHTBOX --------
         function initLightbox() {
           const overlay = document.getElementById("lightboxOverlay");
           const closeBtn = document.querySelector(".close-lightbox");
-          const closeLightbox = () => {
+          const close = () => {
             overlay.classList.remove("active");
             document.getElementById("lightboxImg").src = "";
           };
           overlay.addEventListener("click", (e) => {
-            if (e.target === overlay || e.target === closeBtn) closeLightbox();
+            if (e.target === overlay || e.target === closeBtn) close();
           });
           document.addEventListener("keydown", (e) => {
             if (e.key === "Escape" && overlay.classList.contains("active"))
-              closeLightbox();
+              close();
           });
         }
 
+        // -------- MOBILE MENU --------
         function initMobileMenu() {
           const burger = document.querySelector(".js-menu-toggle");
           if (burger) {
@@ -1098,29 +1135,58 @@
           }
         }
 
+        // -------- SMOOTH SCROLL FOR ANCHOR LINKS --------
         document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
           anchor.addEventListener("click", function (e) {
             const targetId = this.getAttribute("href");
             if (targetId === "#") return;
-            const targetElem = document.querySelector(targetId);
-            if (targetElem) {
+            const target = document.querySelector(targetId);
+            if (target) {
               e.preventDefault();
-              targetElem.scrollIntoView({ behavior: "smooth", block: "start" });
+              target.scrollIntoView({ behavior: "smooth", block: "start" });
               if (window.innerWidth <= 768) {
                 document.body.classList.remove("mobile-menu-active");
-                const mobileMenu = document.querySelector(".site-menu");
-                if (mobileMenu) mobileMenu.style.display = "";
+                const menu = document.querySelector(".site-menu");
+                if (menu) menu.style.display = "";
               }
             }
           });
         });
 
+        // -------- HASH CHANGE --------
+        window.addEventListener("hashchange", () => {
+          routeFromHash();
+        });
+
+        // Expose copy function globally
+        window.copyCategoryLink = copyCategoryLink;
+
+        // -------- INIT --------
         window.addEventListener("DOMContentLoaded", () => {
           buildTabs();
           initLightbox();
           initMobileMenu();
-          initImageData();
+          // Set initial hash if none
+          if (!window.location.hash) {
+            window.history.replaceState(
+              null,
+              "",
+              window.location.pathname + "#category=all",
+            );
+          }
+          routeFromHash();
         });
+
+        // Trigger data load after route
+        window.addEventListener("load", () => {
+          if (!imageData.all || imageData.all.length === 0) {
+            initImageData();
+          }
+        });
+
+        // Expose for debugging
+        window.__imageData = imageData;
+        window.__render = renderMasonryPortfolio;
       })();
     </script>
   </body>
