@@ -37,7 +37,10 @@
     "showcase/misc/wedding_invitation.png"
   ],
   "pixel": [
+    "showcase/pixel/building_pixel.png",
+    "showcase/pixel/character_pixel.gif",
     "showcase/pixel/fanart_tighnari.png",
+    "showcase/pixel/mirai_ui.png",
     "showcase/pixel/tarot.png",
     "showcase/pixel/tarot_old_fool.png"
   ]
