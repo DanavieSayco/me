@@ -1,4 +1,11 @@
 {
+  "3d": [
+    "showcase/3d/cat_model.png",
+    "showcase/3d/robot_idle.gif",
+    "showcase/3d/robot_model.png",
+    "showcase/3d/robot_run.gif",
+    "showcase/3d/store_items.png"
+  ],
   "background": [
     "showcase/background/bew_forest.png",
     "showcase/background/fallen_down_autumn.png",
@@ -9,6 +16,7 @@
     "showcase/character/bew_characters.gif",
     "showcase/character/lune_character.png",
     "showcase/character/robot_rampage_enemy.png",
+    "showcase/character/pharaoh variants walking.png",
     "showcase/character/star_escape_concept_axolotl.png",
     "showcase/character/star_escape_dino.png"
   ],
